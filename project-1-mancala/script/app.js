@@ -93,23 +93,18 @@
 // super stretch: build in a one player mode against a CPU with simple intelligence (if statements)
 
 
-
+/* RENDER PAGE */
 $("#master-stone").hide();
+$("#inst-toggle").hide();
 $(".game-board").hide();
 $("#opponent").hide();
 $("#player").hide();
 
 
-
-// instructions
-// game start
-
-
+/* START BUTTON */
 const setCounters = () => {
 	$(".counter").text("4");
 }
-
-// const $toggleInst = $(".instructions").toggle();
 
 $("#inst-toggle").on("click", function(event){
 	$(".instructions").toggle();
@@ -118,6 +113,7 @@ $("#inst-toggle").on("click", function(event){
 $("#start-game").on("click", function(event){
 	console.log("Mancala has started!");
 	$(".instructions").toggle();
+	$("#inst-toggle").show();
 	$(".game-board").show();
 	$("#opponent").show();
 	$("#player").show();
@@ -131,6 +127,49 @@ $("#start-game").on("click", function(event){
 // then select counter num+1 in player counter array
 // increment counter +1
 // clone stone +1
+
+const $counterOne = $(".player__counters > .counter").eq(0);
+const $counterTwo = $(".player__counters > .counter").eq(1);
+const $counterThree = $(".player__counters > .counter").eq(2);
+const $counterFour = $(".player__counters > .counter").eq(3);
+const $counterFive = $(".player__counters > .counter").eq(4);
+const $counterSix = $(".player__counters > .counter").eq(5);
+const $playerCounter = $("#player__bank-counter");
+const $counterSeven = $(".opponent__counters > .counter").eq(5);
+const $counterEight = $(".opponent__counters > .counter").eq(4);
+const $counterNine = $(".opponent__counters > .counter").eq(3);
+const $counterTen = $(".opponent__counters > .counter").eq(2);
+const $counterEleven = $(".opponent__counters > .counter").eq(1);
+const $counterTwelve = $(".opponent__counters > .counter").eq(0);
+const $opponentCounter = $("#opponent__bank-counter");
+
+const $cupOne = $(".player__cups > .cup").eq(0);
+const $cupTwo = $(".player__cups > .cup").eq(1);
+const $cupThree = $(".player__cups > .cup").eq(2);
+const $cupFour = $(".player__cups > .cup").eq(3);
+const $cupFive = $(".player__cups > .cup").eq(4);
+const $cupSix = $(".player__cups > .cup").eq(5);
+const $playerBank = $("#player__bank");
+const $cupSeven = $(".opponent__cups > .cup").eq(5);
+const $cupEight = $(".opponent__cups > .cup").eq(4);
+const $cupNine = $(".opponent__cups > .cup").eq(3);
+const $cupTen = $(".opponent__cups > .cup").eq(2);
+const $cupEleven = $(".opponent__cups > .cup").eq(1);
+const $cupTwelve = $(".opponent__cups > .cup").eq(0);
+const $opponentBank = $("#opponent__bank");
+
+const gameSequence = {
+	player: [$counterOne, $counterTwo, $counterThree, $counterFour, $counterFive, $counterSix, $playerCounter, $counterSeven, $counterEight, $counterNine, $counterTen, $counterEleven, $counterTwelve],
+	opponent: [$counterSeven, $counterEight, $counterNine, $counterTen, $counterEleven, $counterTwelve, $opponentCounter, $counterOne, $counterTwo, $counterThree, $counterFour, $counterFive, $counterSix]
+};
+
+$(".cup").on("click", function(event){
+		console.log(event.target.id);
+		const playerTurn = () => {
+
+}
+	});
+
 
 // player
 //  --opponent
