@@ -10,20 +10,30 @@
 	<header>
 		<h1>MANCALA</h1>
 		<button id="start-game">Start Game</button>
-		<i class="fas fa-info-circle"></i>
+		<i class="fas fa-info-circle" id="inst-toggle"></i>
 	</header>
+
+	<article class="instructions">
+		<h3>INSTRUCTIONS</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	</article>
 
 	<section id="opponent">
 		<h3>opponent</h3>
 	</section>
 
 	<section class="game-board">
-		<section id="board-left">
+		<section class="board-left">
 			<div class="bank hollow" id="opponent__bank"></div>
 			<div class="counter" id="opponent__bank-counter"></div>
 		</section>
 
-		<section id="board-middle">
+		<section class="board-middle">
 			<div class="opponent__side">
 				<div class="opponent__cups">
 					<div class="cup hollow"></div>
@@ -62,7 +72,7 @@
 			</div>
 		</section>
 
-		<section id="board-right">
+		<section class="board-right">
 			<div class="counter" id="player__bank-counter"></div>
 			<div class="bank hollow" id="player__bank"></div>
 		</section>
@@ -72,6 +82,9 @@
 		<h3>player</h3>
 	</section>
 
+	<div id="master-stone">
+		<i class="stone fas fa-circle"></i>
+	</div>
 	<script src="script/app.js"></script>
 </body>
 </html>

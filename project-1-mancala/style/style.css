@@ -71,7 +71,7 @@ i {
 }
 
 /* == board left style ==*/
-#board-left {
+.board-left {
 	background-color: violet;
 	width: 10vw;
 	display: flex;
@@ -88,7 +88,7 @@ i {
 }
 
 /* == board right stytle == */
-#board-right {
+.board-right {
 	background-color: lightgreen;
 	width: 10vw;
 	display: flex;
@@ -105,7 +105,7 @@ i {
 }
 
 /* == board middle style == */
-#board-middle {
+.board-middle {
 	width: 80vw;
 	margin: 0;
 }
