@@ -128,46 +128,131 @@ $("#start-game").on("click", function(event){
 // increment counter +1
 // clone stone +1
 
-const $counterOne = $(".player__counters > .counter").eq(0);
-const $counterTwo = $(".player__counters > .counter").eq(1);
-const $counterThree = $(".player__counters > .counter").eq(2);
-const $counterFour = $(".player__counters > .counter").eq(3);
-const $counterFive = $(".player__counters > .counter").eq(4);
-const $counterSix = $(".player__counters > .counter").eq(5);
+const $counterOne = $("#counter-one");
+const $counterTwo = $("#counter-two");
+const $counterThree = $("#counter-three");
+const $counterFour = $("#counter-four");
+const $counterFive = $("#counter-five");
+const $counterSix = $("#counter-six");
 const $playerCounter = $("#player__bank-counter");
-const $counterSeven = $(".opponent__counters > .counter").eq(5);
-const $counterEight = $(".opponent__counters > .counter").eq(4);
-const $counterNine = $(".opponent__counters > .counter").eq(3);
-const $counterTen = $(".opponent__counters > .counter").eq(2);
-const $counterEleven = $(".opponent__counters > .counter").eq(1);
-const $counterTwelve = $(".opponent__counters > .counter").eq(0);
+const $counterSeven = $("#counter-seven");
+const $counterEight = $("#counter-eight");
+const $counterNine = $("#counter-nine");
+const $counterTen = $("#counter-ten");
+const $counterEleven = $("#counter-eleven");
+const $counterTwelve = $("#counter-twelve");
 const $opponentCounter = $("#opponent__bank-counter");
 
-const $cupOne = $(".player__cups > .cup").eq(0);
-const $cupTwo = $(".player__cups > .cup").eq(1);
-const $cupThree = $(".player__cups > .cup").eq(2);
-const $cupFour = $(".player__cups > .cup").eq(3);
-const $cupFive = $(".player__cups > .cup").eq(4);
-const $cupSix = $(".player__cups > .cup").eq(5);
+const $cupOne = $("#cup-one");
+const $cupTwo = $("#cup-two");
+const $cupThree = $("#cup-three");
+const $cupFour = $("#cup-four");
+const $cupFive = $("#cup-five");
+const $cupSix = $("#cup-six");
 const $playerBank = $("#player__bank");
-const $cupSeven = $(".opponent__cups > .cup").eq(5);
-const $cupEight = $(".opponent__cups > .cup").eq(4);
-const $cupNine = $(".opponent__cups > .cup").eq(3);
-const $cupTen = $(".opponent__cups > .cup").eq(2);
-const $cupEleven = $(".opponent__cups > .cup").eq(1);
-const $cupTwelve = $(".opponent__cups > .cup").eq(0);
+const $cupSeven = $("#cup-seven");
+const $cupEight = $("#cup-eight");
+const $cupNine = $("#cup-nine");
+const $cupTen = $("#cup-ten");
+const $cupEleven = $("#cup-eleven");
+const $cupTwelve = $("#cup-twelve");
 const $opponentBank = $("#opponent__bank");
 
 const gameSequence = {
-	player: [$counterOne, $counterTwo, $counterThree, $counterFour, $counterFive, $counterSix, $playerCounter, $counterSeven, $counterEight, $counterNine, $counterTen, $counterEleven, $counterTwelve],
-	opponent: [$counterSeven, $counterEight, $counterNine, $counterTen, $counterEleven, $counterTwelve, $opponentCounter, $counterOne, $counterTwo, $counterThree, $counterFour, $counterFive, $counterSix]
+	player: {
+		key: {
+			"cup-one": 0,
+			"cup-two": 1,
+			"cup-three": 2,
+			"cup-four": 3,
+			"cup-five": 4,
+			"cup-six": 5
+		},
+		counter: [
+			$counterOne, 
+			$counterTwo, 
+			$counterThree, 
+			$counterFour, 
+			$counterFive, 
+			$counterSix, 
+			$playerCounter, 
+			$counterSeven, 
+			$counterEight, 
+			$counterNine, 
+			$counterTen, 
+			$counterEleven, 
+			$counterTwelve
+		],
+		hollow: [
+			$cupOne, 
+			$cupTwo, 
+			$cupThree, 
+			$cupFour, 
+			$cupFive, 
+			$cupSix, 
+			$playerBank, 
+			$cupSeven, 
+			$cupEight, 
+			$cupNine, 
+			$cupTen, 
+			$cupEleven, 
+			$cupTwelve
+		]
+	},
+	opponent: {
+		key: {
+			"cup-seven": 0,
+			"cup-eight": 1,
+			"cup-nine": 2,
+			"cup-ten": 3,
+			"cup-eleven": 4,
+			"cup-twelve": 5
+		},
+		counter: [
+			$counterSeven, 
+			$counterEight, 
+			$counterNine, 
+			$counterTen, 
+			$counterEleven, 
+			$counterTwelve,
+			$opponentCounter,
+			$counterOne, 
+			$counterTwo, 
+			$counterThree, 
+			$counterFour, 
+			$counterFive, 
+			$counterSix 
+		],
+		hollow: [
+			$cupSeven, 
+			$cupEight, 
+			$cupNine, 
+			$cupTen, 
+			$cupEleven, 
+			$cupTwelve,
+			$opponentBank,
+			$cupOne, 
+			$cupTwo, 
+			$cupThree, 
+			$cupFour, 
+			$cupFive, 
+			$cupSix
+		]
+	}
 };
 
-$(".cup").on("click", function(event){
-		console.log(event.target.id);
-		const playerTurn = () => {
 
-}
+// player click on turn
+$(".cup").on("click", function(event){
+		let clickedCup = event.target.id;
+		let cupKey = gameSequence.player.key[clickedCup];
+		let $getCounter = gameSequence.player.counter[cupKey];
+		for (let i=1; i <= $getCounter.text(); i++){
+			let impactIndex = cupKey+i;
+			let $impactCounter = gameSequence.player.counter[impactIndex];
+			let incrementCounter = $impactCounter.text(parseFloat($impactCounter.text())+1);
+		}
+
 	});
 
 
