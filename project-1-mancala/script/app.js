@@ -103,7 +103,10 @@ $("#player").hide();
 
 /* START BUTTON */
 const setCounters = () => {
-	$(".counter").text("4");
+	$(".opponent__counters > .counter").text(4);
+	$(".player__counters > .counter").text(4);
+	$("#opponent__bank-counter").text(0);
+	$("#player__bank-counter").text(0);
 }
 
 $("#inst-toggle").on("click", function(event){
@@ -168,6 +171,14 @@ const gameSequence = {
 			"cup-five": 4,
 			"cup-six": 5
 		},
+		arrayPair: {
+			0: 12,
+			1: 11,
+			2: 10,
+			3: 9,
+			4: 8,
+			5: 7
+		},
 		counter: [
 			$counterOne, 
 			$counterTwo, 
@@ -208,6 +219,14 @@ const gameSequence = {
 			"cup-eleven": 4,
 			"cup-twelve": 5
 		},
+		arrayPair: {
+			7: 5,
+			8: 4,
+			9: 3,
+			10: 2,
+			11: 1,
+			12: 0
+		},
 		counter: [
 			$counterSeven, 
 			$counterEight, 
@@ -241,16 +260,28 @@ const gameSequence = {
 	}
 };
 
-
 // player click on turn
 $(".cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.player.key[clickedCup];
 		let $getCounter = gameSequence.player.counter[cupKey];
-		for (let i=1; i <= $getCounter.text(); i++){
+		let i;
+		for (i=1; i <= $getCounter.text(); i++){
 			let impactIndex = cupKey+i;
 			let $impactCounter = gameSequence.player.counter[impactIndex];
 			let incrementCounter = $impactCounter.text(parseFloat($impactCounter.text())+1);
+		};
+		$getCounter.text(0);
+		if (gameSequence.player.counter[cupKey+i-1].text() === "1" && gameSequence.player.counter[cupKey+i-1] !== $playerCounter) {
+			let counterPair = gameSequence.player.arrayPair[cupKey+i-1];
+			let $captureCounter = parseFloat(gameSequence.player.counter[counterPair].text());
+			let $printPlayerCounter = parseFloat($playerCounter.text());
+			$playerCounter.text($printPlayerCounter + $captureCounter);
+			gameSequence.player.counter[counterPair].text(0);
+
+		}
+		if (gameSequence.player.counter[cupKey+i-1] === $playerCounter) {
+
 		}
 
 	});
