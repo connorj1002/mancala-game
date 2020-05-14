@@ -94,6 +94,7 @@
 
 
 /* RENDER PAGE */
+$(".player-submission").hide();
 $("#master-stone").hide();
 $("#inst-toggle").hide();
 $(".game-board").hide();
@@ -102,35 +103,39 @@ $("#player").hide();
 
 
 /* START BUTTON */
+$("#start-game").on("click", function(event){
+	console.log("select players");
+	$(".instructions").toggle();
+	$(".player-submission").show();
+	this.remove();
+});
+
+/* SUBMIT BUTTON */
 const setCounters = () => {
 	$(".opponent__counters > .counter").text(4);
 	$(".player__counters > .counter").text(4);
 	$("#opponent__bank-counter").text(0);
 	$("#player__bank-counter").text(0);
-}
+};
 
 $("#inst-toggle").on("click", function(event){
 	$(".instructions").toggle();
-})
+});
 
-$("#start-game").on("click", function(event){
+$("#submit-button").on("click", function(event){
 	console.log("Mancala has started!");
-	$(".instructions").toggle();
+	$(".player-submission").hide();
 	$("#inst-toggle").show();
 	$(".game-board").show();
+	$("#opponent > h3").text($("#player--two").val());
+	$("#player > h3").text($("#player--one").val());
 	$("#opponent").show();
 	$("#player").show();
 	setCounters();
-	this.remove();
-})
+});
 
 
-// if click cup
-// then grab counter num
-// then select counter num+1 in player counter array
-// increment counter +1
-// clone stone +1
-
+/* JQUERY SELECTOR LIBRARY */
 const $counterOne = $("#counter-one");
 const $counterTwo = $("#counter-two");
 const $counterThree = $("#counter-three");
@@ -161,6 +166,7 @@ const $cupEleven = $("#cup-eleven");
 const $cupTwelve = $("#cup-twelve");
 const $opponentBank = $("#opponent__bank");
 
+/* GAME LOGIC ARRAYS */ 
 const gameSequence = {
 	player: {
 		key: {
@@ -193,7 +199,7 @@ const gameSequence = {
 			$counterTen, 
 			$counterEleven, 
 			$counterTwelve,
-			// loop hack
+			// loop hack - fix after MVP
 			$counterOne, 
 			$counterTwo, 
 			$counterThree, 
@@ -255,7 +261,7 @@ const gameSequence = {
 			$counterFour, 
 			$counterFive, 
 			$counterSix,
-			// loop hack
+			// loop hack - fix after MVP
 			$counterSeven, 
 			$counterEight, 
 			$counterNine, 
@@ -288,7 +294,7 @@ const gameSequence = {
 	}
 };
 
-// PLAYER click on turn
+/* PLAYER TURN */
 $(".cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.player.key[clickedCup];
@@ -320,7 +326,7 @@ $(".cup").on("click", function(event){
 
 
 
-// OPPONENT click on turn
+/* OPPONENT TURN */
 $(".cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.opponent.key[clickedCup];
@@ -371,11 +377,22 @@ $(".cup").on("click", function(event){
 //  --opponent
 //  --player
 
-class Participant {
-	constructor(name){
-		this.name;
+
+
+
+
+class Game {
+	constructor(playerOne, playerTwo){
+		this.player = playerOne;
+		this.opponent = playerTwo;
+	}
+	announcePlayers(){
+		console.log(`this is ${this.player}`)
+		console.log(`this is ${this.opponent}`)
 	}
 }
+
+const players = new Game($("#player--one").val(), $("#player--two").val());
 
 // const player = new Participant($("opponent"));
 // const player = new Participant($("opponent"));
