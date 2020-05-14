@@ -293,13 +293,14 @@ $(".cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.player.key[clickedCup];
 		let $getCounter = gameSequence.player.counter[cupKey];
+		let $protectFlow = parseFloat($getCounter.text());
 		let i;
-		for (i=1; i <= $getCounter.text(); i++){
+		for (i=1; i <= $protectFlow; i++){
 			let impactIndex = cupKey+i;
 			let $impactCounter = gameSequence.player.counter[impactIndex];
 			let incrementCounter = $impactCounter.text(parseFloat($impactCounter.text())+1);
+			$getCounter.text(parseFloat($getCounter.text())-1);
 		};
-		$getCounter.text(0);
 		if (gameSequence.player.counter[cupKey+i-1].text() === "1" && gameSequence.player.counter[cupKey+i-1] !== $playerCounter) {
 			if (cupKey+i > 12){
 				i = i-13;
@@ -312,8 +313,8 @@ $(".cup").on("click", function(event){
 
 		}
 		if (gameSequence.player.counter[cupKey+i-1] === $playerCounter) {
-
-		}
+			console.log("go again!");	
+		} else console.log("opponent's turn");
 
 	});
 
