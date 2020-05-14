@@ -192,6 +192,20 @@ const gameSequence = {
 			$counterNine, 
 			$counterTen, 
 			$counterEleven, 
+			$counterTwelve,
+			// loop hack
+			$counterOne, 
+			$counterTwo, 
+			$counterThree, 
+			$counterFour, 
+			$counterFive, 
+			$counterSix, 
+			$playerCounter, 
+			$counterSeven, 
+			$counterEight, 
+			$counterNine, 
+			$counterTen, 
+			$counterEleven, 
 			$counterTwelve
 		],
 		hollow: [
@@ -240,7 +254,21 @@ const gameSequence = {
 			$counterThree, 
 			$counterFour, 
 			$counterFive, 
-			$counterSix 
+			$counterSix,
+			// loop hack
+			$counterSeven, 
+			$counterEight, 
+			$counterNine, 
+			$counterTen, 
+			$counterEleven, 
+			$counterTwelve,
+			$opponentCounter,
+			$counterOne, 
+			$counterTwo, 
+			$counterThree, 
+			$counterFour, 
+			$counterFive, 
+			$counterSix
 		],
 		hollow: [
 			$cupSeven, 
@@ -273,6 +301,9 @@ $(".cup").on("click", function(event){
 		};
 		$getCounter.text(0);
 		if (gameSequence.player.counter[cupKey+i-1].text() === "1" && gameSequence.player.counter[cupKey+i-1] !== $playerCounter) {
+			if (cupKey+i > 12){
+				i = i-13;
+			};
 			let counterPair = gameSequence.player.arrayPair[cupKey+i-1];
 			let $captureCounter = parseFloat(gameSequence.player.counter[counterPair].text());
 			let $printPlayerCounter = parseFloat($playerCounter.text());
@@ -286,6 +317,22 @@ $(".cup").on("click", function(event){
 
 	});
 
+
+// ATTEMPTED BOARD LOOP
+// let cupKey = gameSequence.player.key[clickedCup];
+// 		let $getCounter = gameSequence.player.counter[cupKey];
+// 		let $protectFlow = parseFloat($getCounter.text());
+// 		let i;
+// 		let impactIndex;
+// 		for (i=1; i <= $protectFlow; i++){
+// 			impactIndex = cupKey+i;
+// 			if (impactIndex > 12){
+// 				impactIndex=0;
+// 				$protectFlow-i;
+// 			};
+// 			let $impactCounter = gameSequence.player.counter[impactIndex];
+// 			let incrementCounter = $impactCounter.text(parseFloat($impactCounter.text())+1);
+// 		};
 
 // player
 //  --opponent
