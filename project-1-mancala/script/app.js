@@ -234,12 +234,12 @@ const gameSequence = {
 			"cup-twelve": 5
 		},
 		arrayPair: {
-			7: 5,
-			8: 4,
-			9: 3,
-			10: 2,
-			11: 1,
-			12: 0
+			0: 12,
+			1: 11,
+			2: 10,
+			3: 9,
+			4: 8,
+			5: 7
 		},
 		counter: [
 			$counterSeven, 
@@ -288,11 +288,13 @@ const gameSequence = {
 	}
 };
 
-// player click on turn
+// PLAYER click on turn
 $(".cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.player.key[clickedCup];
 		let $getCounter = gameSequence.player.counter[cupKey];
+		if ($getCounter.text() === "0") {
+			return console.log("invalid move")};
 		let $protectFlow = parseFloat($getCounter.text());
 		let i;
 		for (i=1; i <= $protectFlow; i++){
@@ -310,12 +312,42 @@ $(".cup").on("click", function(event){
 			let $printPlayerCounter = parseFloat($playerCounter.text());
 			$playerCounter.text($printPlayerCounter + $captureCounter);
 			gameSequence.player.counter[counterPair].text(0);
-
 		}
 		if (gameSequence.player.counter[cupKey+i-1] === $playerCounter) {
 			console.log("go again!");	
 		} else console.log("opponent's turn");
+	});
 
+
+
+// OPPONENT click on turn
+$(".cup").on("click", function(event){
+		let clickedCup = event.target.id;
+		let cupKey = gameSequence.opponent.key[clickedCup];
+		let $getCounter = gameSequence.opponent.counter[cupKey];
+		if ($getCounter.text() === "0") {
+			return console.log("invalid move")};
+		let $protectFlow = parseFloat($getCounter.text());
+		let i;
+		for (i=1; i <= $protectFlow; i++){
+			let impactIndex = cupKey+i;
+			let $impactCounter = gameSequence.opponent.counter[impactIndex];
+			let incrementCounter = $impactCounter.text(parseFloat($impactCounter.text())+1);
+			$getCounter.text(parseFloat($getCounter.text())-1);
+		};
+		if (gameSequence.opponent.counter[cupKey+i-1].text() === "1" && gameSequence.opponent.counter[cupKey+i-1] !== $opponentCounter) {
+			if (cupKey+i > 12){
+				i = i-13;
+			};
+			let counterPair = gameSequence.opponent.arrayPair[cupKey+i-1];
+			let $captureCounter = parseFloat(gameSequence.opponent.counter[counterPair].text());
+			let $printOpponentCounter = parseFloat($opponentCounter.text());
+			$opponentCounter.text($printOpponentCounter + $captureCounter);
+			gameSequence.opponent.counter[counterPair].text(0);
+		}
+		if (gameSequence.opponent.counter[cupKey+i-1] === $opponentCounter) {
+			console.log("go again!");	
+		} else console.log("player's turn");
 	});
 
 
