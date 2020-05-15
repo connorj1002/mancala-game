@@ -1,89 +1,165 @@
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-	margin: 0;
-	height: 100vh;
+  margin: 0;
+  height: 100vh;
+  background-image: linear-gradient(#5851DB, white, white);
 }
 /* == heading == */
 
 header {
-	background-color: #405DE6;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
 
 }
 
 h1 {
-	color: #E1306C;
-	text-align: center;
-	text-shadow: .5px 0 white, 0 .5px white, .5px 0 white, 0 .5px white;
+  color: #5851DB;
+  text-align: center;
+  font-size: 62px;
+
 }
 
 #begin {
-	background-color: green;
-	cursor: pointer;
+  background-image: radial-gradient(white, #405DE6);
+  margin: -25px auto 15px auto;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  width: 80px;
+  height: 25px;
+  font-size: 14px;
+  color: #5851DB;
 }
 
 #inst-toggle {
-	position: absolute;
-	left: 5px;
-	top: 5px;
+  position: absolute;
+  color: white;
+  left: 5px;
+  top: 5px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.instructions {
+  text-align: center;
+  margin: auto 60px;
+  color: white;
+}
+
+li {
+	list-style-type: none;
+}
+
+/* == div player submission == */
+
+.player-submission {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  height: 50vh;
+}
+
+#player--one, #player--two {
+  text-align: center;
+  margin: 0 40vw;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+#mancala-board {
+  height: 50%;
+}
+
+#player--two {
+  margin-top: 30px;
+  margin-bottom: -50px;
+}
+#player--one {
+  background-color: #cac8f3;
+}
+
+#start-game {
+  margin: 0 46vw;
+  border-radius: 10px;
+  border: none;
+  background-color: #8480e4;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.credit {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
 }
 
 /* == section opponent == */
 
 #opponent {
-	background-color: yellow;
-	text-align: center;
+  background-color: yellow;
+  text-align: center;
 }
 
 /* ===== GAME BOARD ===== */
 
 /* == total board styel == */
 .game-board {
-	background-color: orange;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 100vw;
+  background-color: orange;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
 }
 
 .hollow {
-	border: 2px solid black;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border: 2px solid black;
 }
 
 .bank {
-	height: 200px;
-	width: 100px;
-	border-radius: 25%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 200px;
+  width: 100px;
+  border-radius: 25%;
 }
 
 .cup {
-	height: 70px;
-	width: 70px;
-	border-radius: 50%;
-	display: inline-block;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 .counter {
-	height: 30px;
-	width: 30px;
-	border: 2px solid black;
-	display: inline-block;
+  height: 30px;
+  width: 30px;
+  border: 2px solid black;
+  display: inline-block;
 }
 
 /* == board left style ==*/
 .board-left {
-	background-color: violet;
-	width: 10vw;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+  background-color: violet;
+  width: 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #opponent__bank {
@@ -96,11 +172,11 @@ h1 {
 
 /* == board right stytle == */
 .board-right {
-	background-color: lightgreen;
-	width: 10vw;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+  background-color: lightgreen;
+  width: 10vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #player__bank {
@@ -113,48 +189,53 @@ h1 {
 
 /* == board middle style == */
 .board-middle {
-	width: 80vw;
-	margin: 0;
+  width: 80vw;
+  margin: 0;
 }
 
 .opponent__side {
-	background-color: blue;
-	justify-content: center;
+  background-color: blue;
+  justify-content: center;
 }
 
 .player__side {
-	background-color: green;
-	justify-content: center;
+  background-color: green;
+  justify-content: center;
 }
 
 .opponent__cups {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .opponent__counters {
-	display: flex;
-	justify-content: space-between;
-	padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 .player__counters {
-	display: flex;
-	justify-content: space-between;
-	padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 .player__cups {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 
 /* == section player == */
 
 #player {
-	background-color: pink;
-	text-align: center;
+  background-color: pink;
+  text-align: center;
 }
 
 
+/*.stone {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}*/
