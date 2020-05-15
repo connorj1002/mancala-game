@@ -1,7 +1,7 @@
 # mancala-game
 GA SEI Project #1 - Mancala game
 
-/* ==== MANCALA ==== */
+<!-- /* ==== MANCALA ==== */
 
 /* EQUIPMENT */
 // game board
@@ -89,4 +89,4 @@ GA SEI Project #1 - Mancala game
 // show physical "stones" changing in cups and banks as players take turns
 // design robust CSS
 // allow players to modify player names
-// super stretch: build in a one player mode against a CPU with simple intelligence (if statements)
+// super stretch: build in a one player mode against a CPU with simple intelligence (if statements) -->
