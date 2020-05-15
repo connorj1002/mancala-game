@@ -303,8 +303,8 @@ const gameSequence = {
 };
 
 
-let sideCleared = false;
-let whichSideCleared = "";
+let sideCleared = true;
+let whichSideCleared = "player";
 let playerTurn = true;
 
 const checkSides = () => {
@@ -316,7 +316,6 @@ const checkSides = () => {
 		let addOpponentCounters = parseInt($(".opponent__counters > .counter").eq(i).text());
 		totalOpponentCounters += addOpponentCounters;
 	};
-
 	if (totalPlayerCounters === 0){
 		sideCleared = true;
 		whichSideCleared = "player"
@@ -429,15 +428,14 @@ function runGame () {
 				$opponentCounter.text(parseInt($opponentCounter.text()) + parseInt($playerSet.children().eq(i).text()));
 				$playerSet.children().eq(i).text(0);
 			};
-			console.log(parseInt($("player__bank-counter").text()));
-			console.log(parseInt($("opponent__bank-counter").text()));
-		if (parseInt($("player__bank-counter").text()) > parseInt($("opponent__bank-counter").text())){
+		};
+		if (parseInt($playerCounter.text()) > parseInt($opponentCounter.text())){
 			$communicate.text($("#player--one").val() + " wins!");
-		} else if(parseInt($("player__bank-counter").text()) < parseInt($("opponent__bank-counter").text())){
+		} else if(parseInt($playerCounter.text()) < parseInt($opponentCounter.text())){
 			$communicate.text($("#player--two").val() + " wins!");
 		} else $communicate.text("it's a tie!");
-		};
-	}
+	};
 };
+
 
 
