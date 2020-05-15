@@ -97,6 +97,7 @@
 $(".player-submission").hide();
 $("#master-stone").hide();
 $("#inst-toggle").hide();
+$("#communicate").hide();
 $(".game-board").hide();
 $("#opponent").hide();
 $("#player").hide();
@@ -125,13 +126,14 @@ $("#start-game").on("click", function(event){
 	console.log("Mancala has started!");
 	$(".player-submission").hide();
 	$("#inst-toggle").show();
+	$("#communicate").show();
 	$(".game-board").show();
 	$("#opponent > h3").text($("#player--two").val());
 	$("#player > h3").text($("#player--one").val());
 	$("#opponent").show();
 	$("#player").show();
 	setCounters();
-	startGame();
+	runGame();
 });
 
 /* JQUERY SELECTOR LIBRARY */
@@ -150,6 +152,9 @@ const $counterEleven = $("#counter-eleven");
 const $counterTwelve = $("#counter-twelve");
 const $opponentCounter = $("#opponent__bank-counter");
 
+const $playerSet = $(".player__counters");
+const $opponentSet = $(".opponent__counters");
+
 const $cupOne = $("#cup-one");
 const $cupTwo = $("#cup-two");
 const $cupThree = $("#cup-three");
@@ -165,7 +170,8 @@ const $cupEleven = $("#cup-eleven");
 const $cupTwelve = $("#cup-twelve");
 const $opponentBank = $("#opponent__bank");
 
-const $communicate = $("#communicate").children();
+const $communicate = $("#communicate");
+const $stone = $("#master-stone > .stone");
 
 /* GAME LOGIC ARRAYS */ 
 const gameSequence = {
@@ -306,10 +312,8 @@ const checkSides = () => {
 	for (i=0; i <= 5; i++){
 		let addPlayerCounters = parseInt($(".player__counters > .counter").eq(i).text());
 		totalPlayerCounters += addPlayerCounters;
-		console.log(totalPlayerCounters);
 		let addOpponentCounters = parseInt($(".opponent__counters > .counter").eq(i).text());
 		totalOpponentCounters += addOpponentCounters;
-		console.log(totalOpponentCounters);
 	};
 
 	if (totalPlayerCounters === 0){
@@ -327,35 +331,47 @@ $(".player__cups > .cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.player.key[clickedCup];
 		let $getCounter = gameSequence.player.counter[cupKey];
-		if ($getCounter.text() === "0") {
-			return $communicate.text("invalid move")};
+		// if ($getCounter.text() === 0) {
+		// 	$communicate.text("invalid move");
+		// 	return runGame();
+		// };
 		let $protectFlow = parseFloat($getCounter.text());
 		let i;
 		for (i=1; i <= $protectFlow; i++){
 			let impactIndex = cupKey+i;
 			let $impactCounter = gameSequence.player.counter[impactIndex];
-			let incrementCounter = $impactCounter.text(parseFloat($impactCounter.text())+1);
+			$impactCounter.text(parseFloat($impactCounter.text())+1);
 			$getCounter.text(parseFloat($getCounter.text())-1);
 		};
-		if (gameSequence.player.counter[cupKey+i-1].text() === "1" && gameSequence.player.counter[cupKey+i-1] !== $playerCounter) {
+		if (gameSequence.player.counter[cupKey+i-1].text() === "1" && gameSequence.player.counter[cupKey+i-1] !== $playerCounter && gameSequence.player.counter[cupKey+i-1].parent() === $playerSet) {
 			if (cupKey+i > 12){
 				i = i-13;
 			};
+				console.log(gameSequence.player.counter[cupKey+i-1].text());
+				console.log(gameSequence.player.counter[cupKey+i-1]);
+				console.log(gameSequence.player.counter[cupKey+i-1].parent());
+				console.log($opponentSet);
 			let counterPair = gameSequence.player.arrayPair[cupKey+i-1];
 			let $captureCounter = parseFloat(gameSequence.player.counter[counterPair].text());
 			let $printPlayerCounter = parseFloat($playerCounter.text());
 			$playerCounter.text($printPlayerCounter + $captureCounter);
 			gameSequence.player.counter[counterPair].text(0);
-			checkSides();
-			return playerTurn = false;
+			playerTurn = !playerTurn;
+			$communicate.text(`${$("#player--two").val()}'s move`);
+			console.log("capture");
 		}
 		else if (gameSequence.player.counter[cupKey+i-1] === $playerCounter) {
-			checkSides();
-			return $communicate.text("go again");
+			playerTurn = playerTurn;
+			$communicate.text("go again");
+			console.log("replay")
 		} else {
-			checkSides();
-			return playerTurn = false;
-		}
+			playerTurn = !playerTurn;
+			$communicate.text(`${$("#player--two").val()}'s move`);
+			console.log("everything else");
+		};
+		checkSides();
+		$(".player__cups > .cup").off("click");
+		runGame();
 	});
 };
 
@@ -364,17 +380,19 @@ $(".opponent__cups > .cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.opponent.key[clickedCup];
 		let $getCounter = gameSequence.opponent.counter[cupKey];
-		if ($getCounter.text() === "0") {
-			return $communicate.text("invalid move")};
+		// if ($getCounter.text() === 0) {
+		// 	$communicate.text("invalid move");
+		// 	return runGame();
+		// };
 		let $protectFlow = parseFloat($getCounter.text());
 		let i;
 		for (i=1; i <= $protectFlow; i++){
 			let impactIndex = cupKey+i;
 			let $impactCounter = gameSequence.opponent.counter[impactIndex];
-			let incrementCounter = $impactCounter.text(parseFloat($impactCounter.text())+1);
+			$impactCounter.text(parseFloat($impactCounter.text())+1);
 			$getCounter.text(parseFloat($getCounter.text())-1);
 		};
-		if (gameSequence.opponent.counter[cupKey+i-1].text() === "1" && gameSequence.opponent.counter[cupKey+i-1] !== $opponentCounter) {
+		if (gameSequence.opponent.counter[cupKey+i-1].text() === "1" && gameSequence.opponent.counter[cupKey+i-1] !== $opponentCounter && gameSequence.opponent.counter[cupKey+i-1].parent() === $playerSet) {
 			if (cupKey+i > 12){
 				i = i-13;
 			};
@@ -383,51 +401,57 @@ $(".opponent__cups > .cup").on("click", function(event){
 			let $printOpponentCounter = parseFloat($opponentCounter.text());
 			$opponentCounter.text($printOpponentCounter + $captureCounter);
 			gameSequence.opponent.counter[counterPair].text(0);
-			checkSides();
-			return playerTurn = true;
+			playerTurn = !playerTurn;
+			$communicate.text(`${$("#player--one").val()}'s move`);
+			console.log("capture");
 		}
-		else if (gameSequence.opponent.counter[cupKey+i-1] === $opponentCounter) {
-			checkSides();
-			return $communicate.text("go again");	
+		else if (gameSequence.opponent.counter[cupKey+i-1] === $opponentCounter) {	
+			playerTurn = playerTurn;
+			$communicate.text("go again");
+			console.log("replay");
 		} else {
-			checkSides();
-			return playerTurn = true;
-		}
+			playerTurn = !playerTurn;
+			$communicate.text(`${$("#player--one").val()}'s move`);
+			console.log("everything else");
+		};
+		checkSides();
+		$(".opponent__cups > .cup").off("click");
+		runGame();
 	});
 };
 
-function startGame () {
-	while (sideCleared === false){
-		if (playerTurn === true) {
-			checkSides();
-			// $communicate.text(`${$("#player--one").val()}'s move`);
+function runGame () {
+	if (sideCleared === false){
+		if (playerTurn) {
+			console.log("player 1");
 			// enlarge player 1 text
 			playerMove();
-		};
-		if (playerTurn === false) {
-			checkSides();
-			// $communicate.text(`${$("#player--two").val()}'s move`);
+			console.log("player 1+");
+		} else {
+			console.log("player 2");
 			// enlarge player 2 text
 			opponentMove();
-		}
-	};
-	if (whichSideCleared === "player"){
-		console.log("which side cleared (player) works");
-		// add opponent counters to player bank
-		// clear opponent counters
+			console.log("player 2+");
+		};
 	} else {
-		console.log("which side cleared (opponent) works");
-		// add player counters to opponent bank
-		// clear player counters
-	};
-	if ($("player__bank-counter").text() > $("opponent__bank-counter").text()){
-		return console.log("player wins!");
-		// prompt player wins
-	} else if($("player__bank-counter").text() > $("opponent__bank-counter").text()){
-		return console.log("opponent wins!");
-		// prompt opponent wins
-	} else {return console.log("it's a tie!");
-	};
+		if (whichSideCleared === "player"){
+			console.log("which side cleared (player) works");
+			// add opponent counters to player bank
+			// clear opponent counters
+		} else {
+			console.log("which side cleared (opponent) works");
+			// add player counters to opponent bank
+			// clear player counters
+		};
+		if ($("player__bank-counter").text() > $("opponent__bank-counter").text()){
+			return console.log("player wins!");
+			// prompt player wins
+		} else if($("player__bank-counter").text() > $("opponent__bank-counter").text()){
+			return console.log("opponent wins!");
+			// prompt opponent wins
+		} else {return console.log("it's a tie!");
+		};
+	}
 };
 
 
