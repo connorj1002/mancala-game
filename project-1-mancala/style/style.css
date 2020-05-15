@@ -9,23 +9,30 @@ body {
 /* == heading == */
 
 header {
-	background-color: red;
+	background-color: #405DE6;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: column;
+	position: relative;
+
 }
 
 h1 {
-	background-color: blue;
+	color: #E1306C;
 	text-align: center;
+	text-shadow: .5px 0 white, 0 .5px white, .5px 0 white, 0 .5px white;
 }
 
 #begin {
 	background-color: green;
+	cursor: pointer;
 }
 
-i {
-
+#inst-toggle {
+	position: absolute;
+	left: 5px;
+	top: 5px;
 }
 
 /* == section opponent == */
