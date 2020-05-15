@@ -183,7 +183,7 @@ const gameSequence = {
 			"cup-three": 2,
 			"cup-four": 3,
 			"cup-five": 4,
-			"cup-six": 5
+			"cup-six": 5,
 		},
 		arrayPair: {
 			0: 12,
@@ -299,12 +299,46 @@ const gameSequence = {
 			$cupFive, 
 			$cupSix
 		]
+	},
+	refreshStones: {
+		counter: [
+			$counterOne, 
+			$counterTwo, 
+			$counterThree, 
+			$counterFour, 
+			$counterFive, 
+			$counterSix, 
+			$playerCounter, 
+			$counterSeven, 
+			$counterEight, 
+			$counterNine, 
+			$counterTen, 
+			$counterEleven, 
+			$counterTwelve,
+			$opponentCounter
+		],
+		hollow: [
+			$cupOne, 
+			$cupTwo, 
+			$cupThree, 
+			$cupFour, 
+			$cupFive, 
+			$cupSix, 
+			$playerBank, 
+			$cupSeven, 
+			$cupEight, 
+			$cupNine, 
+			$cupTen, 
+			$cupEleven, 
+			$cupTwelve,
+			$opponentBank
+		]
 	}
 };
 
 
-let sideCleared = true;
-let whichSideCleared = "player";
+let sideCleared = false;
+let whichSideCleared = "";
 let playerTurn = true;
 
 const checkSides = () => {
@@ -434,6 +468,15 @@ function runGame () {
 		} else if(parseInt($playerCounter.text()) < parseInt($opponentCounter.text())){
 			$communicate.text($("#player--two").val() + " wins!");
 		} else $communicate.text("it's a tie!");
+	};
+	for (let i=0; i < 14; i++){
+		let counterValue = parseInt(gameSequence.refreshStones.counter[i].text());
+		let grabHollow = gameSequence.refreshStones.hollow[i]
+		let clearHollows = grabHollow.empty();
+		for (let i=1; i <= counterValue; i++){
+			$("#master-stone > .stone").clone().appendTo(grabHollow);
+			console.log("appended stone");
+		};
 	};
 };
 
