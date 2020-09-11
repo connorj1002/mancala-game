@@ -2,6 +2,7 @@
 $(".player-submission").hide();
 $("#master-stone").hide();
 $("#inst-toggle").hide();
+$("#inst-close").hide();
 $("#communicate").hide();
 $(".game-board").hide();
 $("#opponent").hide();
@@ -17,19 +18,25 @@ $("#begin").on("click", function(event){
 
 /* START BUTTON */
 const setCounters = () => {
-	$(".opponent__counters > .counter").text(4);
-	$(".player__counters > .counter").text(4);
+	$(".opponent-container > .counter").text(4);
+	$(".player-container > .counter").text(4);
 	$("#opponent__bank-counter").text(0);
 	$("#player__bank-counter").text(0);
 };
 
 $("#inst-toggle").on("click", function(event){
-	$(".instructions").toggle();
+  $(".instructions").toggle();
+  $("#inst-close").toggle();
+});
+
+$("#inst-close").on("click", function(event){
+  $(".instructions").toggle();
+  $("#inst-close").toggle();
 });
 
 $("#start-game").on("click", function(event){
-	console.log("Mancala has started!");
-	$(".player-submission").hide();
+  console.log("Mancala has started!");
+  $(".player-submission").hide();
 	$("#inst-toggle").show();
 	$("#communicate").show();
 	$(".game-board").show();
@@ -58,8 +65,8 @@ const $counterEleven = $("#counter-eleven");
 const $counterTwelve = $("#counter-twelve");
 const $opponentCounter = $("#opponent__bank-counter");
 
-const $playerSet = $(".player__counters");
-const $opponentSet = $(".opponent__counters");
+const $playerSet = $(".player-container > .counter");
+const $opponentSet = $(".opponent-container > .counter");
 
 const $cupOne = $("#cup-one");
 const $cupTwo = $("#cup-two");
@@ -250,9 +257,9 @@ const checkSides = () => {
 	let totalPlayerCounters=0;
 	let totalOpponentCounters=0;
 	for (i=0; i <= 5; i++){
-		let addPlayerCounters = parseInt($(".player__counters > .counter").eq(i).text());
+		let addPlayerCounters = parseInt($(".player-container > .counter").eq(i).text());
 		totalPlayerCounters += addPlayerCounters;
-		let addOpponentCounters = parseInt($(".opponent__counters > .counter").eq(i).text());
+		let addOpponentCounters = parseInt($(".opponent-container > .counter").eq(i).text());
 		totalOpponentCounters += addOpponentCounters;
 	};
 	if (totalPlayerCounters === 0){
@@ -266,12 +273,12 @@ const checkSides = () => {
 };
 
 const playerMove = () => {
-$(".player__cups > .cup").on("click", function(event){
+$(".player-container > .cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.player.key[clickedCup];
 		let $getCounter = gameSequence.player.counter[cupKey];
 		if ($getCounter.text() === "0") {
-			return $communicate.text("invalid move");
+			return $communicate.text("Invalid Move");
 		};
 		let $protectFlow = parseFloat($getCounter.text());
 		let i;
@@ -281,7 +288,7 @@ $(".player__cups > .cup").on("click", function(event){
 			$impactCounter.text(parseFloat($impactCounter.text())+1);
 			$getCounter.text(parseFloat($getCounter.text())-1);
 		};
-		if (gameSequence.player.counter[cupKey+i-1].text() === "1" && gameSequence.player.counter[cupKey+i-1].attr("id") !== $playerCounter.attr("id") && gameSequence.player.counter[cupKey+i-1].parent().attr("class") === $playerSet.attr("class")) {
+		if (gameSequence.player.counter[cupKey+i-1].text() === "1" && gameSequence.player.counter[cupKey+i-1].attr("id") !== $playerCounter.attr("id") && gameSequence.player.counter[cupKey+i-1].parent().attr("class") === $playerSet.parent().attr("class")) {
 			if (cupKey+i > 12){
 				i = i-13;
 			};
@@ -295,24 +302,24 @@ $(".player__cups > .cup").on("click", function(event){
 		}
 		else if (gameSequence.player.counter[cupKey+i-1] === $playerCounter) {
 			playerTurn = playerTurn;
-			$communicate.text("go again");
+			$communicate.text("Go Again!");
 		} else {
 			playerTurn = !playerTurn;
 			$communicate.text($("#player--two").val() + "'s move");
 		};
 		checkSides();
-		$(".player__cups > .cup").off("click");
+		$(".player-container > .cup").off("click");
 		runGame();
 	});
 };
 
 const opponentMove = () => {
-$(".opponent__cups > .cup").on("click", function(event){
+$(".opponent-container > .cup").on("click", function(event){
 		let clickedCup = event.target.id;
 		let cupKey = gameSequence.opponent.key[clickedCup];
 		let $getCounter = gameSequence.opponent.counter[cupKey];
 		if ($getCounter.text() === "0") {
-			return $communicate.text("invalid move");
+			return $communicate.text("Invalid Move");
 		};
 		let $protectFlow = parseFloat($getCounter.text());
 		let i;
@@ -322,7 +329,7 @@ $(".opponent__cups > .cup").on("click", function(event){
 			$impactCounter.text(parseFloat($impactCounter.text())+1);
 			$getCounter.text(parseFloat($getCounter.text())-1);
 		};
-		if (gameSequence.opponent.counter[cupKey+i-1].text() === "1" && gameSequence.opponent.counter[cupKey+i-1].attr("id") !== $opponentCounter.attr("id") && gameSequence.opponent.counter[cupKey+i-1].parent().attr("class") === $opponentSet.attr("class")) {
+		if (gameSequence.opponent.counter[cupKey+i-1].text() === "1" && gameSequence.opponent.counter[cupKey+i-1].attr("id") !== $opponentCounter.attr("id") && gameSequence.opponent.counter[cupKey+i-1].parent().attr("class") === $opponentSet.parent().attr("class")) {
 			if (cupKey+i > 12){
 				i = i-13;
 			};
@@ -336,13 +343,13 @@ $(".opponent__cups > .cup").on("click", function(event){
 		}
 		else if (gameSequence.opponent.counter[cupKey+i-1] === $opponentCounter) {	
 			playerTurn = playerTurn;
-			$communicate.text("go again");
+			$communicate.text("Go Again!");
 		} else {
 			playerTurn = !playerTurn;
 			$communicate.text($("#player--one").val() + "'s move");
 		};
 		checkSides();
-		$(".opponent__cups > .cup").off("click");
+		$(".opponent-container > .cup").off("click");
 		runGame();
 	});
 };
@@ -350,29 +357,55 @@ $(".opponent__cups > .cup").on("click", function(event){
 function runGame () {
 	if (sideCleared === false){
 		if (playerTurn) {
-			// enlarge player 1 text
+      $("#player > h3").css('color', 'rgba(0,0,0,1)');
+      $("#player > h3").css('font-weight', '700');
+      $("#opponent > h3").css('color', 'rgba(0,0,0,0.35)');
+      $("#opponent > h3").css('font-weight', '400');
 			playerMove();
 		} else {
-			// enlarge player 2 text
+      $("#player > h3").css('color', 'rgba(0,0,0,0.35)');
+      $("#player > h3").css('font-weight', '400');
+      $("#opponent > h3").css('color', 'rgba(0,0,0,1)');
+      $("#opponent > h3").css('font-weight', '700');
 			opponentMove();
 		};
 	} else {
 		if (whichSideCleared === "player"){
 			for (i=0; i <= 5; i++){
-				$playerCounter.text(parseInt($playerCounter.text()) + parseInt($opponentSet.children().eq(i).text()));
-				$opponentSet.children().eq(i).text(0);
+				$playerCounter.text(parseInt($playerCounter.text()) + parseInt($opponentSet.eq(i).text()));
+				$opponentSet.eq(i).text(0);
 			};
 		} else {
 			for (i=0; i <= 5; i++){
-				$opponentCounter.text(parseInt($opponentCounter.text()) + parseInt($playerSet.children().eq(i).text()));
-				$playerSet.children().eq(i).text(0);
+				$opponentCounter.text(parseInt($opponentCounter.text()) + parseInt($playerSet.eq(i).text()));
+				$playerSet.eq(i).text(0);
 			};
 		};
 		if (parseInt($playerCounter.text()) > parseInt($opponentCounter.text())){
-			$communicate.text($("#player--one").val() + " wins!");
+      $communicate.text($("#player--one").val() + " wins!");
+      $communicate.css("color", "black");
+      $communicate.css("background-color", "green");
+      $("#player > h3").css('color', 'rgba(0,0,0,1)');
+      $("#player > h3").css('font-weight', '700');
+      $("#opponent > h3").css('color', 'rgba(0,0,0,0.35)');
+      $("#opponent > h3").css('font-weight', '400');
 		} else if(parseInt($playerCounter.text()) < parseInt($opponentCounter.text())){
-			$communicate.text($("#player--two").val() + " wins!");
-		} else $communicate.text("it's a tie!");
+      $communicate.text($("#player--two").val() + " wins!");
+      $communicate.css("color", "black");
+      $communicate.css("background-color", "red");
+      $("#player > h3").css('color', 'rgba(0,0,0,0.35)');
+      $("#player > h3").css('font-weight', '400');
+      $("#opponent > h3").css('color', 'rgba(0,0,0,1)');
+      $("#opponent > h3").css('font-weight', '700');
+    } else { 
+      $communicate.text("It's a Tie!");
+      $communicate.css("color", "black");
+      $communicate.css("background-color", "yellow");
+      $("#player > h3").css('color', 'rgba(0,0,0,1)');
+      $("#player > h3").css('font-weight', '700');
+      $("#opponent > h3").css('color', 'rgba(0,0,0,1)');
+      $("#opponent > h3").css('font-weight', '700');
+    }
 	};
 	for (let i=0; i < 14; i++){
 		let counterValue = parseInt(gameSequence.refreshStones.counter[i].text());
